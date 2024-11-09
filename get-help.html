@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Help</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #007BFF; /* Blue background */
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        section {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #007BFF; /* Blue underline */
+        }
+
+        .contact-form input, .contact-form select, .contact-form button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .contact-form button {
+            background-color: #28a745; /* Green button */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .chatbot-container {
+            margin-top: 30px;
+            background-color: #e9ecef; /* Light gray */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .chatbot-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chat-history {
+            max-height: 200px; /* Limit height for scrolling */
+            overflow-y: auto; /* Enable scrolling */
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            text-align: right; /* Align user messages to the right */
+        }
+
+        .bot-message {
+            text-align: left; /* Align bot messages to the left */
+        }
+
+        .reward-system {
+            margin-top: 20px;
+            background-color: #d4edda; /* Light green */
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Get Help</h1>
+</header>
+
+<section>
+    <h2>Contact Your Landlord</h2>
+    <p>If you have questions or need assistance, reach out to your landlord directly.</p>
+    <div class="contact-form">
+        <input type="text" id="tenantName" placeholder="Your Name" required>
+        <input type="email" id="tenantEmail" placeholder="Your Email" required>
+        <input type="text" id="tenantMessage" placeholder="Your Message" required>
+        
+        <select id="contactMethod">
+            <option value="email">Email</option>
+            <option value="sms">SMS</option>
+        </select>
+
+        <button onclick="sendContact()">Send Message</button>
+    </div>
+</section>
+
+<section class="chatbot-container">
+    <div class="chatbot-header">Chatbot - Frequently Asked Questions</div>
+
+    <div class="chat-history" id="chatHistory"></div>
+
+    <input type="text" id="userInput" placeholder="Ask your question..." onkeypress="if(event.key === 'Enter'){ askQuestion(); }">
+    <button onclick="askQuestion()">Send</button>
+
+    <!-- Reward System -->
+    <div class="reward-system">
+       Earn points for every question you ask! Collect enough points to unlock rewards.
+       <p id="pointsDisplay">Points Earned: <span id="points">0</span></p>
+    </div>
+
+</section>
+
+<script>
+    let points = 0;
+
+    function toggleAnswer(answerId) {
+        const answer = document.getElementById(answerId);
+// Toggle visibility of the answer
+         answer.style.display = answer.style.display === "none" || answer.style.display === "" ? "block" : "none";
+     }
+     
+     function sendContact() {
+         const name = document.getElementById('tenantName').value;
+         const email = document.getElementById('tenantEmail').value;
+         const message = document.getElementById('tenantMessage').value;
+         const method = document.getElementById('contactMethod').value;
+
+         // Simulate sending the message
+         alert(Message sent to your landlord via ${method}!\n\nName: ${name}\nEmail: ${email}\nMessage: ${message});
+         
+         // Clear the form
+         document.getElementById('tenantName').value = '';
+         document.getElementById('tenantEmail').value = '';
+         document.getElementById('tenantMessage').value = '';
+     }
+
+     function askQuestion() {
+         const userInput = document.getElementById('userInput').value.trim();
+         if (userInput === "") return;
+
+         // Append user message to chat history
+         appendMessage("user", userInput);
+         
+         // Simple bot logic for responses
+         let botResponse = getBotResponse(userInput);
+         
+         // Append bot response to chat history
+         appendMessage("bot", botResponse);
+         
+         // Clear input field
+         document.getElementById('userInput').value = '';
+
+         // Increment points for interaction
+         points++;
+         document.getElementById('points').innerText = points.toString();
+     }
+     
+     function appendMessage(sender, message) {
+         const chatHistory = document.getElementById('chatHistory');
+         const messageDiv = document.createElement('div');
+         
+         if (sender === "user") {
+             messageDiv.className = "user-message";
+             messageDiv.innerText = You: ${message};
+         } else {
+             messageDiv.className = "bot-message";
+             messageDiv.innerText = Bot: ${message};
+         }
+         
+         chatHistory.appendChild(messageDiv);
+         
+         // Scroll to bottom of chat history
+         chatHistory.scrollTop = chatHistory.scrollHeight;
+     }
+     
+     function getBotResponse(input) {
+         input = input.toLowerCase();
+         
+         if (input.includes("maintenance")) {
+             return "For maintenance issues, please contact your landlord directly or submit a request through the app.";
+         } else if (input.includes("pay rent")) {
+             return "You can pay your rent through the app using various payment methods.";
+         } else if (input.includes("miss payment")) {
+             return "Please contact your landlord immediately to discuss your options.";
+         } else if (input.includes("help")) {
+             return "I'm here to help! You can ask me about maintenance issues, rent payments, or anything else.";
+         } else {
+             return "I'm sorry, I didn't understand that. Can you please rephrase?";
+         }
+     }
+</script>
+
+</body>
+</html>

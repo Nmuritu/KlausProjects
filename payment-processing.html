@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #007BFF; /* Blue background */
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        section {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center; /* Center align text */
+        }
+
+        .loading-message {
+           font-size: larger; 
+           color:#28a745; /* Green color */
+       }
+       
+       .note {
+           font-size: small; 
+           color: #666; 
+           margin-top: 10px; /* Add some margin for spacing */
+       }
+       
+       .back-button {
+           display: inline-block; 
+           margin-top: 20px; 
+           padding: 10px 20px; 
+           background-color: #007BFF; 
+           color: white; 
+           text-decoration: none; 
+           border-radius: 5px; 
+       }
+       
+       .back-button:hover {
+           background-color: #0056b3; /* Darker blue on hover */
+       }
+       
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Payment Processing</h1>
+</header>
+
+<section>
+    <div class="loading-message">
+        Your payment is being processed... Please wait.
+    </div>
+
+    <div class="note">
+        We will notify you once the payment is confirmed.
+    </div>
+
+    <a href="account_management.html" class="back-button">Back to Account Management</a>
+</section>
+
+</body>
+</html>
